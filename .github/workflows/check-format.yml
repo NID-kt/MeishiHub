@@ -1,0 +1,55 @@
+name: Check Format
+
+on: pull_request
+
+env:
+  JAVA_VERSION: 17
+
+permissions:
+  pull-requests: write
+  contents: read
+
+jobs:
+  android-lint:
+    runs-on: ubuntu-latest
+    steps:
+      # setup
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: ${{ env.JAVA_VERSION }}
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+      - name: Setup reviewdog
+        uses: reviewdog/action-setup@v1
+        with:
+          reviewdog_version: latest
+      # android lintを実行
+      - name: Android Lint
+        id: android-lint
+        run: ./gradlew lint
+      # report
+      - name: Comment PR by reviewdog
+        if: always()
+        run: |
+          find ./*/build/reports/android-lint/lintResults.sarif \
+            -type f \
+            -exec sh -c "cat {} | reviewdog -f=sarif -reporter=github-pr-review" \;
+        env:
+          REVIEWDOG_GITHUB_API_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  ktlint:
+    runs-on: ubuntu-latest
+    steps:
+      # setup
+      - name: Checkout sources
+        uses: actions/checkout@v4
+      - name: ktlint
+        uses: ScaCap/action-ktlint@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          reporter: github-pr-review
+          fail_on_error: true
