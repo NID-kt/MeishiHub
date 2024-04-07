@@ -10,3 +10,4 @@ ktlint_function_naming_ignore_when_annotated_with=Composable
 max_line_length = 180
 ktlint_standard_multiline-expression-wrapping=disabled
 ktlint_standard_string-template-indent=disabled
+ktlint_standard_package-name=disabled
