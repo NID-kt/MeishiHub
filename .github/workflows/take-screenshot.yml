@@ -1,0 +1,64 @@
+name: Take screenshot
+
+on: pull_request
+
+jobs:
+  take-screenshot:
+    runs-on: ubuntu-latest
+    permissions:
+      pull-requests: write
+
+    steps:
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: "temurin"
+          java-version: 17
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
+
+      - name: Run all local screenshot tests (Roborazzi)
+        run: ./gradlew recordRoborazziDebug
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          clean: false
+
+      - name: Run all local screenshot tests (Roborazzi)
+        run: ./gradlew compareRoborazziDebug
+
+      - name: Upload screenshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: screenshot_result
+          path: app/build/outputs/roborazzi
+
+      - name: Check for UI differences
+        id: check_ui_diff
+        run: |
+          if ls app/build/outputs/roborazzi/*compare* 1> /dev/null 2>&1; then
+            echo "ui-diff-found=true" >> $GITHUB_OUTPUT
+          else
+            echo "ui-diff-found=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Comment PR about UI differences
+        if: ${{ steps.check_ui_diff.outputs.ui-diff-found == 'true' }}
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            UI の差分あったよ！ :eyes:
+
+      - name: Comment PR about no UI differences
+        if: ${{ steps.check_ui_diff.outputs.ui-diff-found == 'false' }}
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            UI の差分ないヨ！ :tada:
