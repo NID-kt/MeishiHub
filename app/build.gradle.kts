@@ -1,6 +1,7 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
 }
 
 android {
