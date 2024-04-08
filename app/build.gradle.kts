@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
+    alias(libs.plugins.roborazzi)
 }
 
 android {
@@ -51,6 +52,12 @@ android {
         htmlOutput = File(project.buildDir, "reports/android-lint/lintResults.html")
         xmlReport = false
     }
+    @Suppress("UnstableApiUsage")
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -72,4 +79,10 @@ dependencies {
     debugImplementation(libs.androidx.ui.test.manifest)
 
     lintChecks(libs.compose.lint.checks)
+
+    testImplementation(libs.ui.test.junit4)
+    testImplementation(libs.robolectric)
+    testImplementation(libs.roborazzi)
+    testImplementation(libs.roborazzi.compose)
+    testImplementation(libs.roborazzi.rule)
 }
