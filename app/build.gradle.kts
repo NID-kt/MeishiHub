@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrainsKotlinAndroid)
     id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
     alias(libs.plugins.roborazzi)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -85,4 +86,6 @@ dependencies {
     testImplementation(libs.roborazzi)
     testImplementation(libs.roborazzi.compose)
     testImplementation(libs.roborazzi.rule)
+
+    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
 }
