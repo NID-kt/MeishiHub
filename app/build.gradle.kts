@@ -4,6 +4,7 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint") version "12.1.0"
     alias(libs.plugins.roborazzi)
     id("com.google.gms.google-services")
+    id("com.apollographql.apollo")
 }
 
 android {
@@ -87,5 +88,8 @@ dependencies {
     testImplementation(libs.roborazzi.compose)
     testImplementation(libs.roborazzi.rule)
 
-    implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
+    implementation(platform(libs.firebase.bom))
+
+    implementation(libs.apollo.runtime)
+    implementation(libs.apollo.coroutines.support)
 }
