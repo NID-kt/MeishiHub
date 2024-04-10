@@ -9,6 +9,6 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("com.apollographql.apollo:apollo-gradle-plugin:2.5.14")
+        classpath(libs.apollo.gradle.plugin)
     }
 }
