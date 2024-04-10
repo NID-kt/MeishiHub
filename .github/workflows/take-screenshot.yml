@@ -20,7 +20,7 @@ jobs:
         with:
           ref: main
 
-      - run: echo ${{ secrets.GOOGLE_SERVICES_JSON }} > app/google-services.json
+      - run: echo '${{ secrets.GOOGLE_SERVICES_JSON }}' > app/google-services.json
 
 
       - name: Setup Gradle
