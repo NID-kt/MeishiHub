@@ -36,6 +36,9 @@ jobs:
         with:
           clean: false
 
+      - name: Grant execute permission for gradlew
+        run: chmod +x ./gradlew
+
       - name: Run all local screenshot tests (Roborazzi)
         run: ./gradlew compareRoborazziDebug
 
