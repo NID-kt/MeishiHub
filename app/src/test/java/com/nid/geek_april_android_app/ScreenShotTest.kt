@@ -4,7 +4,6 @@ import androidx.compose.ui.test.junit4.createComposeRule
 import androidx.compose.ui.test.onRoot
 import com.github.takahirom.roborazzi.RobolectricDeviceQualifiers
 import com.github.takahirom.roborazzi.captureRoboImage
-import com.nid.geek_april_android_app
 import com.nid.geek_april_android_app.ui.theme.Geek_april_android_appTheme
 import org.junit.Rule
 import org.junit.Test
