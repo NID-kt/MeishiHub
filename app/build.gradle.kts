@@ -89,6 +89,6 @@ dependencies {
     testImplementation(libs.roborazzi.rule)
 
     implementation(platform("com.google.firebase:firebase-bom:32.8.0"))
-    implementation("com.apollographql.apollo:apollo-runtime:2.5.14")
-    implementation("com.apollographql.apollo:apollo-coroutines-support:2.5.14")
+    implementation(libs.apollo.runtime)
+    implementation(libs.apollo.coroutines.support)
 }
