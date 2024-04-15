@@ -16,6 +16,9 @@ jobs:
         with:
           script: |
             const actor = process.env.GITHUB_ACTOR;
+            if ("dependabot[bot]" === actor) {
+              return;
+            }
             github.rest.issues.addAssignees({
               owner: context.repo.owner,
               repo: context.repo.repo,
